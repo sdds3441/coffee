@@ -17,7 +17,7 @@ class ListAdapter(private val context: Context):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_timeset, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
 
         return ViewHolder(view)
     }
@@ -30,6 +30,7 @@ class ListAdapter(private val context: Context):
     // (3) View에 내용 입력
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
        holder.bind(datas[position])
+
     }
     // (4) 레이아웃 내 View 연결
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
