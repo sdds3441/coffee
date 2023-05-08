@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation">
+
+    <fragment
+        android:id="@+id/timeSettingFragment"
+        android:name="com.example.coffee.TimeSettingFragment"
+        android:label="fragment_time_setting"
+        tools:layout="@layout/fragment_time_setting" >
+        <action
+            android:id="@+id/action_timeSettingFragment_to_timesetFragment"
+            app:destination="@id/timesetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment2"
+        android:name="com.example.coffee.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/naviActivity">
+        <activity
+            android:id="@+id/naviActivity"
+            android:name="com.example.coffee.NaviActivity"
+            android:label="fragment_timeset"
+            tools:layout="@layout/fragment_timeset" />
+        <action
+            android:id="@+id/action_global_timesetFragment"
+            app:destination="@id/timesetFragment" />
+        <action
+            android:id="@+id/action_global_settingFragment2"
+            app:destination="@id/settingFragment2" />
+        <action
+            android:id="@+id/action_global_etcFragment2"
+            app:destination="@id/etcFragment2" />
+        <action
+            android:id="@+id/action_global_homeFragment2"
+            app:destination="@id/homeFragment2" />
+    </navigation>
+    <fragment
+        android:id="@+id/timesetFragment"
+        android:name="com.example.coffee.TimesetFragment"
+        android:label="TimesetFragment" >
+        <action
+            android:id="@+id/action_timesetFragment_to_timeSettingFragment"
+            app:destination="@id/timeSettingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.example.coffee.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/etcFragment2"
+        android:name="com.example.coffee.EtcFragment"
+        android:label="fragment_etc"
+        tools:layout="@layout/fragment_etc" />
+</navigation>

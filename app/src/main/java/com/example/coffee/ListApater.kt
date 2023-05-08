@@ -15,6 +15,15 @@ class ListAdapter(private val context: Context):
     // (1) 아이템 레이아웃과 결합
     var datas = mutableListOf<ListItem>()
 
+    interface OnItemClickListener{
+        fun onItemClick(v:View,data:ListItem,pos:Int)
+    }
+    private var listener:OnItemClickListener?=null
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        this.listener=listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
@@ -41,8 +50,16 @@ class ListAdapter(private val context: Context):
 
         fun bind(item:ListItem){
             name.text=item.name
-            time.text=item.time.toString()
-            date.text=item.date.toString()
+            time.text=item.time
+            date.text=item.date
+
+            val pos=adapterPosition
+            if(pos!=RecyclerView.NO_POSITION)
+            {
+                itemView.setOnClickListener{
+                    listener?.onItemClick(itemView,item,pos)
+                }
+            }
         }
     }
 }

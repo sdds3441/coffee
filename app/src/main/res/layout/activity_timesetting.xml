@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/parents">
+
+    <EditText
+        android:id="@+id/al_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timePicker"
+        android:layout_centerHorizontal="true"
+        android:inputType="text"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
+        android:timePickerMode="spinner" />
+
+   <Button
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/date_sel"
+         android:layout_marginStart="30dp"
+       android:layout_alignParentBottom="true"
+         android:text="날짜 선택" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sel_complete"
+        android:layout_marginStart="300dp"
+        android:layout_alignParentBottom="true"
+        android:text="설정완료" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/al_name"
+        android:id="@+id/date_test"/>
+
+
+</RelativeLayout>

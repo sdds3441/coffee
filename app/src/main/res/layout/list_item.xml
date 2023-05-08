@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#ffffff"
+            android:background="@color/beige"
             android:padding="10dp">
 
             <RelativeLayout
@@ -62,6 +62,14 @@
                     android:text="아자차"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/al_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/date"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"/>
 
 
             </RelativeLayout>

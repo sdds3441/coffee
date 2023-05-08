@@ -1,38 +1,56 @@
 package com.example.coffee
 
+import android.graphics.Insets.add
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coffee.databinding.ActivityNaviBinding
+import com.example.coffee.databinding.FragmentTimesetBinding
 
 private const val TAG_ETC = "Etcfragment"
 private const val TAG_HOME = "Homefragment"
 private const val TAG_SETTING = "Settingfragment"
 private const val TAG_Timeset = "Timesetfragment"
+private const val TAG_Timesetting = "TimeSettingfragment"
 
 class NaviActivity : AppCompatActivity() {
 
+    lateinit var listAdapter:ListAdapter
     private lateinit var binding : ActivityNaviBinding
+    private lateinit var secbinding : FragmentTimesetBinding
+    val datas = mutableListOf<ListItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNaviBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        secbinding= FragmentTimesetBinding.inflate(layoutInflater)
+
+        var select=0
+
+       setContentView(binding.root)
         setFragment(TAG_HOME, HomeFragment())
 
         binding.navigationView.setOnItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.etcFragment -> setFragment(TAG_ETC, EtcFragment())
                 R.id.homeFragment -> setFragment(TAG_HOME, HomeFragment())
                 R.id.time_setFragment -> setFragment(TAG_Timeset, TimesetFragment())
-                R.id.settingFragment-> setFragment(TAG_SETTING, SettingFragment())
+                R.id.settingFragment -> setFragment(TAG_SETTING, SettingFragment())
+
             }
+
             true
+
+
         }
     }
 
-    private fun setFragment(tag: String, fragment: Fragment) {
+    fun setFragment(tag: String, fragment: Fragment) {
         val manager: FragmentManager = supportFragmentManager
         val fragTransaction = manager.beginTransaction()
 
@@ -44,6 +62,7 @@ class NaviActivity : AppCompatActivity() {
         val home = manager.findFragmentByTag(TAG_HOME)
         val setting = manager.findFragmentByTag(TAG_SETTING)
         val timeset = manager.findFragmentByTag(TAG_Timeset)
+        val timeSetting=manager.findFragmentByTag(TAG_Timesetting)
 
         if (etc != null){
             fragTransaction.hide(etc)
@@ -58,6 +77,10 @@ class NaviActivity : AppCompatActivity() {
         }
         if (timeset != null) {
             fragTransaction.hide(timeset)
+        }
+
+        if (timeSetting != null) {
+            fragTransaction.hide(timeSetting)
         }
 
         if (tag == TAG_HOME) {
@@ -82,7 +105,15 @@ class NaviActivity : AppCompatActivity() {
                 fragTransaction.show(setting)
             }
         }
+        else if (tag == TAG_Timesetting){
+            if (timeSetting != null){
+                fragTransaction.show(timeSetting)
+            }
+        }
 
         fragTransaction.commitAllowingStateLoss()
     }
+
+
+
 }
