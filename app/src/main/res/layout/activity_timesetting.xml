@@ -42,6 +42,7 @@
         app:chipSpacingHorizontal="12dp"
         android:layout_below="@id/date_test"
         android:layout_marginTop="20dp"
+        app:singleSelection="false"
         >
 
         <com.google.android.material.chip.Chip
@@ -127,14 +128,14 @@
             android:textSize="30sp"/>
 
     <Switch
+        android:id="@+id/Sound_sw"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignRight="@id/al_name"
         android:layout_alignTop="@id/Sound"
+        android:layout_alignRight="@id/al_name"
         android:layout_alignBottom="@id/Sound"
         android:layout_marginRight="30dp"
-        android:id="@+id/Sound_sw"
-        />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -148,13 +149,14 @@
         android:textSize="30sp"/>
 
     <Switch
+        android:id="@+id/Coffee_sw"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignRight="@id/al_name"
         android:layout_alignTop="@id/Coffee"
+        android:layout_alignRight="@id/al_name"
         android:layout_alignBottom="@id/Coffee"
         android:layout_marginRight="30dp"
-        android:id="@+id/Coffee_sw"/>
+        tools:ignore="TouchTargetSizeCheck" />
 
 
 </RelativeLayout>

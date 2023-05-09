@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -25,6 +26,7 @@ class TimeSettingActivity : AppCompatActivity() {
         val dateButton: Button = findViewById(R.id.date_sel)
         val endButton: Button = findViewById(R.id.sel_complete)
         val test:TextView=findViewById(R.id.date_test)
+        val DOW:ChipGroup=findViewById(R.id.DOW)
 
         var sel_hour: Int = 0
         var sel_minute: Int = 0
@@ -32,6 +34,9 @@ class TimeSettingActivity : AppCompatActivity() {
         var sel_year:Int = 0
         var sel_month:Int = 0
         var sel_date:Int = 0
+        var sound:Boolean
+        var coffee:Boolean
+        var sel_dow= mutableListOf(0,0,0,0,0,0,0)
 
         val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreference.edit()
@@ -56,11 +61,7 @@ class TimeSettingActivity : AppCompatActivity() {
             val builder = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Set Dieday")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-
-                //위에서 만든 calendarConstraint을 builder에 설정해줍니다.
                 .setCalendarConstraints(calendarConstraintBuilder.build());
-
-//아래부터는 목표1 코드방식과 동일합니다.
 
             val datePicker = builder.build()
 
@@ -81,6 +82,13 @@ class TimeSettingActivity : AppCompatActivity() {
 
             datePicker.show(supportFragmentManager,datePicker.toString())
         }
+
+        /*DOW.setOnCheckedStateChangeListener { group, checkedId ->
+            Log.d("test", "Click: $checkedId")
+            when(checkedId){
+                ->{d}
+            }
+        }*/
 
 
         endButton.setOnClickListener {
