@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/parents">
-
-    <EditText
-        android:id="@+id/al_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/timePicker"
-        android:layout_centerHorizontal="true"
-        android:inputType="text"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
 
     <TimePicker
         android:id="@+id/timePicker"
@@ -25,13 +15,15 @@
         android:layout_centerInParent="true"
         android:timePickerMode="spinner" />
 
-   <Button
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:id="@+id/date_sel"
-         android:layout_marginStart="30dp"
-       android:layout_alignParentBottom="true"
-         android:text="날짜 선택" />
+    <Button
+        android:id="@+id/date_sel"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignRight="@id/DOW"
+        android:layout_alignBottom="@id/date_test"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/baseline_calendar_month_24"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,13 +31,130 @@
         android:id="@+id/sel_complete"
         android:layout_marginStart="300dp"
         android:layout_alignParentBottom="true"
-        android:text="설정완료" />
+        android:text="설정완료"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"/>
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/DOW"
+        app:chipSpacingHorizontal="12dp"
+        android:layout_below="@id/date_test"
+        android:layout_marginTop="20dp"
+        >
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일"
+            android:textColor="@color/red"
+            app:chipBackgroundColor="@color/white"
+            />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:text="월"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:text="화"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:text="수"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:text="목"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:text="금"/>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/Saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipBackgroundColor="@color/white"
+            android:textColor="@color/blue"
+            android:text="토"/>
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <EditText
+        android:id="@+id/al_name"
+        android:hint="알람 이름"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/DOW"
+        android:layout_centerHorizontal="true"
+        android:inputType="text"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_below="@id/timePicker"
+        android:textColor="@color/black"
+        android:hint="날짜 선택"
+        android:textSize="20sp"
+        android:gravity="top"
+        android:layout_marginStart="10dp"
+        android:id="@+id/date_test"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/al_name"
-        android:id="@+id/date_test"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알림음"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/al_name"
+            android:id="@+id/Sound"
+            android:textSize="30sp"/>
+
+    <Switch
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignRight="@id/al_name"
+        android:layout_alignTop="@id/Sound"
+        android:layout_alignBottom="@id/Sound"
+        android:layout_marginRight="30dp"
+        android:id="@+id/Sound_sw"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="커피"
+        android:textColor="@color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/Sound"
+        android:id="@+id/Coffee"
+        android:textSize="30sp"/>
+
+    <Switch
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignRight="@id/al_name"
+        android:layout_alignTop="@id/Coffee"
+        android:layout_alignBottom="@id/Coffee"
+        android:layout_marginRight="30dp"
+        android:id="@+id/Coffee_sw"/>
 
 
 </RelativeLayout>

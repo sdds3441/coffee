@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.coffee.databinding.FragmentTimesetBinding
+import com.example.coffee.databinding.ListItemBinding
 import java.time.LocalDateTime
 import java.util.*
 
@@ -64,7 +65,7 @@ class TimesetFragment : Fragment() {
     ): View? {
 
         val binding = FragmentTimesetBinding.inflate(inflater, container, false)
-
+        val binding2= ListItemBinding.inflate(inflater, container, false)
 
         listAdapter = ListAdapter(naviActivity)
         binding.rvList.adapter = listAdapter
@@ -75,17 +76,11 @@ class TimesetFragment : Fragment() {
             selected_cardview=1000
         }
 
-        /*datas.apply {
-            add(ListItem(name = "아침", time ="6:23" , date = "5월4일"))
+        binding2.alSwitch.setOnCheckedChangeListener{_, isChecked->
+            alarm_on = isChecked
 
-            listAdapter.datas = datas
-            listAdapter.notifyDataSetChanged()
-
-        }*/
-
-        val view = inflater.inflate(R.layout.fragment_timeset, container, false)
-        //val switch :Switch = view.findViewById(R.id.al_switch)
-
+            Log.d("스위치",alarm_on.toString())
+        }
 
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
 
