@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -27,6 +28,8 @@ class TimeSettingActivity : AppCompatActivity() {
         val endButton: Button = findViewById(R.id.sel_complete)
         val test:TextView=findViewById(R.id.date_test)
         val DOW:ChipGroup=findViewById(R.id.DOW)
+        val coffee_sw:Switch=findViewById(R.id.Coffee_sw)
+        val alarm_sw:Switch=findViewById(R.id.Sound_sw)
 
         var sel_hour: Int = 0
         var sel_minute: Int = 0
@@ -34,8 +37,8 @@ class TimeSettingActivity : AppCompatActivity() {
         var sel_year:Int = 0
         var sel_month:Int = 0
         var sel_date:Int = 0
-        var sound:Boolean
-        var coffee:Boolean
+        var sound:Boolean=true
+        var coffee:Boolean=true
         var sel_dow= mutableListOf(0,0,0,0,0,0,0)
 
         val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
@@ -83,12 +86,19 @@ class TimeSettingActivity : AppCompatActivity() {
             datePicker.show(supportFragmentManager,datePicker.toString())
         }
 
-        /*DOW.setOnCheckedStateChangeListener { group, checkedId ->
-            Log.d("test", "Click: $checkedId")
-            when(checkedId){
-                ->{d}
-            }
-        }*/
+
+        DOW.setOnCheckedStateChangeListener { group, checkedIds ->
+            Log.d("요일",checkedIds.size.toString())
+
+        }
+
+        coffee_sw.setOnCheckedChangeListener{p0, isChecked->
+            coffee = isChecked
+        }
+
+        alarm_sw.setOnCheckedChangeListener{p0, isChecked->
+            sound = isChecked
+        }
 
 
         endButton.setOnClickListener {
@@ -102,8 +112,9 @@ class TimeSettingActivity : AppCompatActivity() {
             intent.putExtra("sel_month",sel_month)
             intent.putExtra("sel_date",sel_date)
 
+            intent.putExtra("coffee_sw",coffee)
+            intent.putExtra("alarm_sw",sound)
 
-            Log.d("시간넣은거",sel_name)
 
             val timesetFragment=TimesetFragment()
             timesetFragment.arguments=bundle

@@ -46,49 +46,47 @@
         >
 
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="일"
-            android:textColor="@color/red"
-            app:chipBackgroundColor="@color/white"
-            />
-
+            android:textColor="@color/red"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:text="월"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Tuesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:text="화"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Wednesday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:text="수"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Thursday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:text="목"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Friday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:text="금"/>
         <com.google.android.material.chip.Chip
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:id="@+id/Saturday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:chipBackgroundColor="@color/white"
             android:textColor="@color/blue"
             android:text="토"/>
 
@@ -129,6 +127,7 @@
 
     <Switch
         android:id="@+id/Sound_sw"
+        android:checked="true"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignTop="@id/Sound"
@@ -149,6 +148,7 @@
         android:textSize="30sp"/>
 
     <Switch
+        android:checked="true"
         android:id="@+id/Coffee_sw"
         android:layout_width="48dp"
         android:layout_height="48dp"
