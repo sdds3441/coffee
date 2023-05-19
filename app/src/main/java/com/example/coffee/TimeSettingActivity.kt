@@ -4,20 +4,33 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
+import com.example.coffee.databinding.ActivityTimesettingBinding
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 class TimeSettingActivity : AppCompatActivity() {
+
+    //private val IP_ADDRESS = "172.30.40.7"
+    private val IP_ADDRESS = "10.0.2.2"
+    private val TAG = "phptest"
+    private lateinit var binding : ActivityTimesettingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timesetting)
@@ -121,13 +134,72 @@ class TimeSettingActivity : AppCompatActivity() {
             setResult(2,intent)
 
             finish()
+            val n = 2
+            val Day : String = (sel_year.toString()+"."+sel_month.toString().padStart(n, '0')+"."+sel_date.toString().padStart(n, '0'))
+            val Time: String = (sel_hour.toString().padStart(n, '0')+"."+sel_minute.toString().padStart(n, '0'))
+            val task = InsertData()
+            //task.execute("http://$IP_ADDRESS/input.php", Day, Time)
+            task.execute("http://$IP_ADDRESS/insertTest.php", Day, Time)
+
         }
     }
-    /*private fun showDatePicker() {
-        val cal = Calendar.getInstance()
-        DatePickerDialog(this, DatePickerDialog.OnDateSetListener { datePicker, y, m, d->
-            Toast.makeText(this, "$y-$m-$d", Toast.LENGTH_SHORT).show()
-        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)).show()
+    private class InsertData : AsyncTask<String, Void, String>() {
+
+
+        override fun doInBackground(vararg params: String?): String {
+
+
+            val serverURL: String? = params[0]
+            val Day: String? = params[1]
+            val Time: String? = params[2]
+            val postParameters: String = "Day=$Day&Time=$Time"
+            Log.d("day",postParameters.toString())
+            try {
+                val url = URL(serverURL)
+                val httpURLConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+
+
+                httpURLConnection.readTimeout = 5000
+                httpURLConnection.connectTimeout = 5000
+                httpURLConnection.requestMethod = "POST"
+                httpURLConnection.connect()
+
+
+                val outputStream: OutputStream = httpURLConnection.outputStream
+                outputStream.write(postParameters.toByteArray(charset("UTF-8")))
+                outputStream.flush()
+                outputStream.close()
+
+                val responseStatusCode: Int = httpURLConnection.responseCode
+
+
+                val inputStream: InputStream
+                inputStream = if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    httpURLConnection.inputStream
+                } else {
+                    httpURLConnection.errorStream
+                }
+
+                val inputStreamReader = InputStreamReader(inputStream, "UTF-8")
+                val bufferedReader = BufferedReader(inputStreamReader)
+
+                val sb = StringBuilder()
+                var line: String? = null
+
+                while (bufferedReader.readLine().also({ line = it }) != null) {
+                    sb.append(line)
+                }
+
+                bufferedReader.close();
+                Log.d("이거뭐임3",sb.toString())
+                return sb.toString();
+
+            } catch (e: Exception) {
+                Log.d("안듀ㅙㅁ",e.message.toString())
+                return "Error" + e.message
+            }
+
+        }
+
     }
-*/
 }
