@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.coffee.databinding.FragmentTimesetBinding
 import com.example.coffee.databinding.ListItemBinding
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TimesetFragment : Fragment() {
@@ -72,9 +73,13 @@ class TimesetFragment : Fragment() {
 
         binding.addAl.setOnClickListener {
             val intent=Intent(context,TimeSettingActivity::class.java)
+            intent.putExtra("pos",datas.size+1)
             startActivityForResult(intent,1)
             selected_cardview=1000
         }
+
+
+
 
         binding2.alSwitch.setOnCheckedChangeListener{_, isChecked->
             alarm_on = isChecked
@@ -89,12 +94,21 @@ class TimesetFragment : Fragment() {
                 activity?.let {
                     val intent=Intent(context,TimeSettingActivity::class.java)
                     ori_time=datas[selected_cardview].time
+                    intent.putExtra("ori_hour",hour)
+                    intent.putExtra("ori_minute",minute)
+                    intent.putExtra("ori_name",name)
+                    intent.putExtra("ori_year",year)
+                    intent.putExtra("ori_month",month)
+                    intent.putExtra("ori_date",date)
+                    intent.putExtra("pos",selected_cardview+1)
+
                     startActivityForResult(intent,1)
                 }
 
             }
 
         })
+
         return binding.root
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -118,9 +132,10 @@ class TimesetFragment : Fragment() {
 
         if (selected_cardview==1000){
             datas.apply {
+
                 if(year==dateAndtime.year)
                     add(ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = month.toString()+"월 "+date.toString()+"일"))
-               else
+                else
                     add(ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일"))
 
                 listAdapter.datas = datas
@@ -129,12 +144,13 @@ class TimesetFragment : Fragment() {
             }
         }
         else{
-            if(year==dateAndtime.year)
-                datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = month.toString()+"월 "+date.toString()+"일")
-            else
-                datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date =year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일")
-        datas.apply {
-            listAdapter.datas = datas
+            datas.apply {
+                if(year==dateAndtime.year)
+                    datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = month.toString()+"월 "+date.toString()+"일")
+                else
+                    datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date =year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일")
+
+                listAdapter.datas = datas
             listAdapter.notifyDataSetChanged()
         }
 

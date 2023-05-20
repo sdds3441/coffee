@@ -74,6 +74,15 @@
                     android:checked="true"
                     tools:ignore="TouchTargetSizeCheck" />
 
+                <Button
+                    android:id="@+id/close_btn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignTop="@id/name"
+                    android:layout_alignRight="@id/al_switch"
+                    android:background="@drawable/baseline_close_24"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
             </RelativeLayout>
 

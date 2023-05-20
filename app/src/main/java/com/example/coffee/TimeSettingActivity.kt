@@ -23,12 +23,14 @@ import java.io.InputStreamReader
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TimeSettingActivity : AppCompatActivity() {
 
-    //private val IP_ADDRESS = "172.30.40.7"
-    private val IP_ADDRESS = "10.0.2.2"
+    private val IP_ADDRESS = "172.30.40.37"
+    //private val IP_ADDRESS = "10.0.2.2"
     private val TAG = "phptest"
     private lateinit var binding : ActivityTimesettingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,12 +46,26 @@ class TimeSettingActivity : AppCompatActivity() {
         val coffee_sw:Switch=findViewById(R.id.Coffee_sw)
         val alarm_sw:Switch=findViewById(R.id.Sound_sw)
 
-        var sel_hour: Int = 0
-        var sel_minute: Int = 0
-        var sel_name:String=""
-        var sel_year:Int = 0
-        var sel_month:Int = 0
-        var sel_date:Int = 0
+        val Now_daytime: LocalDateTime = LocalDateTime.now()
+        val yearformatter = DateTimeFormatter.ofPattern("YYYY")
+        val monthformatter = DateTimeFormatter.ofPattern("MM")
+        val dateformatter = DateTimeFormatter.ofPattern("dd")
+        val hourformatter = DateTimeFormatter.ofPattern("HH")
+        val minuteformatter = DateTimeFormatter.ofPattern("mm")
+
+        val Now_year = Now_daytime.format(yearformatter)
+        val Now_month = Now_daytime.format(monthformatter)
+        val Now_date = Now_daytime.format(dateformatter)
+        val Now_hour = Now_daytime.format(hourformatter)
+        val Now_minute = Now_daytime.format(minuteformatter)
+
+        var sel_hour=intent.getIntExtra("ori_hour",Now_hour.toInt())
+        var sel_minute=intent.getIntExtra("ori_minute",Now_minute.toInt())
+        var selname=intent.getStringExtra("ori_name")
+        var sel_year=intent.getIntExtra("ori_year",Now_year.toInt())
+        var sel_month=intent.getIntExtra("ori_month",Now_month.toInt())
+        var sel_date=intent.getIntExtra("ori_date",Now_date.toInt())
+        var pos=intent.getIntExtra("pos",0)
         var sound:Boolean=true
         var coffee:Boolean=true
         var sel_dow= mutableListOf(0,0,0,0,0,0,0)
@@ -116,11 +132,12 @@ class TimeSettingActivity : AppCompatActivity() {
 
         endButton.setOnClickListener {
             val bundle=Bundle()
-            sel_name=alName.text.toString()
+            if(alName.text.toString()!="")
+                selname=alName.text.toString()
             intent=Intent()
             intent.putExtra("sel_hour",sel_hour)
             intent.putExtra("sel_minute",sel_minute)
-            intent.putExtra("sel_name",sel_name)
+            intent.putExtra("sel_name",selname)
             intent.putExtra("sel_year",sel_year)
             intent.putExtra("sel_month",sel_month)
             intent.putExtra("sel_date",sel_date)
@@ -135,11 +152,12 @@ class TimeSettingActivity : AppCompatActivity() {
 
             finish()
             val n = 2
+            val Pos : String=(pos.toString())
             val Day : String = (sel_year.toString()+"."+sel_month.toString().padStart(n, '0')+"."+sel_date.toString().padStart(n, '0'))
             val Time: String = (sel_hour.toString().padStart(n, '0')+"."+sel_minute.toString().padStart(n, '0'))
             val task = InsertData()
             //task.execute("http://$IP_ADDRESS/input.php", Day, Time)
-            task.execute("http://$IP_ADDRESS/insertTest.php", Day, Time)
+            task.execute("http://$IP_ADDRESS/insertTest.php",Pos, Day, Time)
 
         }
     }
@@ -150,10 +168,11 @@ class TimeSettingActivity : AppCompatActivity() {
 
 
             val serverURL: String? = params[0]
-            val Day: String? = params[1]
-            val Time: String? = params[2]
-            val postParameters: String = "Day=$Day&Time=$Time"
-            Log.d("day",postParameters.toString())
+            val Pos : String? = params[1]
+            val Day: String? = params[2]
+            val Time: String? = params[3]
+            val postParameters: String = "Pos=$Pos&Day=$Day&Time=$Time"
+            Log.d("pos",postParameters.toString())
             try {
                 val url = URL(serverURL)
                 val httpURLConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -192,7 +211,7 @@ class TimeSettingActivity : AppCompatActivity() {
 
                 bufferedReader.close();
                 Log.d("이거뭐임3",sb.toString())
-                return sb.toString();
+                return sb.toString()
 
             } catch (e: Exception) {
                 Log.d("안듀ㅙㅁ",e.message.toString())
