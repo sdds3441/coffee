@@ -6,29 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.coffee.databinding.ListItemBinding
 import kotlinx.coroutines.NonDisposableHandle.parent
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
 class ListAdapter(private val context: Context):
     RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
-
     // (1) 아이템 레이아웃과 결합
     var datas = mutableListOf<ListItem>()
+    var dbHelper = DBHelper(context, "mydb.db",null,1)
+    var database = dbHelper.writableDatabase
 
     interface OnItemClickListener{
         fun onItemClick(v:View,data:ListItem,pos:Int)
     }
     private var listener:OnItemClickListener?=null
-
     fun setOnItemClickListener(listener: OnItemClickListener){
         this.listener=listener
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
@@ -36,6 +38,7 @@ class ListAdapter(private val context: Context):
         val cl_btn=view.findViewById<Button>(R.id.close_btn)
 
         cl_btn.setOnClickListener {
+
         }
 
         return ViewHolder(view)
@@ -58,7 +61,7 @@ class ListAdapter(private val context: Context):
         private val time: TextView = itemView.findViewById(R.id.time)
         private val date: TextView = itemView.findViewById(R.id.date)
         private val cl_btn: Button = itemView.findViewById(R.id.close_btn)
-        private val al_switch:Switch=itemView.findViewById(R.id.al_switch)
+        //private val al_switch:Switch=itemView.findViewById(R.id.al_switch)
 
 
 
@@ -67,7 +70,12 @@ class ListAdapter(private val context: Context):
             time.text=item.time
             date.text=item.date
 
+
             val pos=adapterPosition
+
+
+
+
             if(pos!=RecyclerView.NO_POSITION)
             {
                 itemView.setOnClickListener{
@@ -77,6 +85,8 @@ class ListAdapter(private val context: Context):
             cl_btn.setOnClickListener {
                 datas.removeAt(pos)
                 notifyDataSetChanged()
+
+
             }
         }
     }

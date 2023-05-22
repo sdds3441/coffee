@@ -40,6 +40,9 @@ class TimesetFragment : Fragment() {
     private var date:Int? = 0
     private var ori_time:String?=""
     private var alarm_on:Boolean=true
+    private var dow:String?=""
+    private var coffee:Boolean=true
+    private var alarm:Boolean=true
 
     val dateAndtime:LocalDateTime=LocalDateTime.now()
 
@@ -66,7 +69,6 @@ class TimesetFragment : Fragment() {
     ): View? {
 
         val binding = FragmentTimesetBinding.inflate(inflater, container, false)
-        val binding2= ListItemBinding.inflate(inflater, container, false)
 
         listAdapter = ListAdapter(naviActivity)
         binding.rvList.adapter = listAdapter
@@ -81,11 +83,6 @@ class TimesetFragment : Fragment() {
 
 
 
-        binding2.alSwitch.setOnCheckedChangeListener{_, isChecked->
-            alarm_on = isChecked
-
-            Log.d("스위치",alarm_on.toString())
-        }
 
         listAdapter.setOnItemClickListener(object : ListAdapter.OnItemClickListener {
 
@@ -125,6 +122,9 @@ class TimesetFragment : Fragment() {
                 year=data?.getIntExtra("sel_year",2023)
                 month=data?.getIntExtra("sel_month",1)
                 date=data?.getIntExtra("sel_date",1)
+                dow=data?.getStringExtra("sel_dow")
+                alarm= data?.getBooleanExtra("alarm_sw",true) == true
+                coffee= data?.getBooleanExtra("coffee_sw",true) == true
                 Log.d("시간받아오기", hour.toString())
             }
         }
@@ -134,9 +134,19 @@ class TimesetFragment : Fragment() {
             datas.apply {
 
                 if(year==dateAndtime.year)
-                    add(ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = month.toString()+"월 "+date.toString()+"일"))
+                    add(ListItem(name = name.toString(),
+                        time = hour.toString()+":"+minute.toString(),
+                        date = month.toString()+"월 "+date.toString()+"일",
+                        DOW =dow.toString(),
+                        alarm=alarm,
+                        coffee=coffee))
                 else
-                    add(ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일"))
+                    add(ListItem(name = name.toString(),
+                        time = hour.toString()+":"+minute.toString(),
+                        date = year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일",
+                        DOW =dow.toString(),
+                        alarm=alarm,
+                        coffee=coffee))
 
                 listAdapter.datas = datas
                 listAdapter.notifyDataSetChanged()
@@ -146,9 +156,19 @@ class TimesetFragment : Fragment() {
         else{
             datas.apply {
                 if(year==dateAndtime.year)
-                    datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date = month.toString()+"월 "+date.toString()+"일")
+                    datas[selected_cardview] = ListItem(name = name.toString(),
+                        time = hour.toString()+":"+minute.toString(),
+                        date = month.toString()+"월 "+date.toString()+"일",
+                        DOW =dow.toString(),
+                        alarm=alarm,
+                        coffee=coffee)
                 else
-                    datas[selected_cardview] = ListItem(name = name.toString(), time = hour.toString()+":"+minute.toString(), date =year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일")
+                    datas[selected_cardview] = ListItem(name = name.toString(),
+                        time = hour.toString()+":"+minute.toString(),
+                        date =year.toString()+"년 "+month.toString()+"월 "+date.toString()+"일",
+                        DOW =dow.toString(),
+                        alarm=alarm,
+                        coffee=coffee)
 
                 listAdapter.datas = datas
             listAdapter.notifyDataSetChanged()

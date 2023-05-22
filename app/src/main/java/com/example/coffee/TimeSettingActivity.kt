@@ -29,7 +29,7 @@ import java.util.*
 
 class TimeSettingActivity : AppCompatActivity() {
 
-    private val IP_ADDRESS = "172.30.40.37"
+    private val IP_ADDRESS = "172.30.40.23"
     //private val IP_ADDRESS = "10.0.2.2"
     private val TAG = "phptest"
     private lateinit var binding : ActivityTimesettingBinding
@@ -68,7 +68,10 @@ class TimeSettingActivity : AppCompatActivity() {
         var pos=intent.getIntExtra("pos",0)
         var sound:Boolean=true
         var coffee:Boolean=true
+        var sum:Boolean=true
         var sel_dow= mutableListOf(0,0,0,0,0,0,0)
+        var sound_int:Int=1
+        var coffee_int:Int=1
 
         val sharedPreference = getSharedPreferences("CreateProfile", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = sharedPreference.edit()
@@ -117,7 +120,40 @@ class TimeSettingActivity : AppCompatActivity() {
 
 
         DOW.setOnCheckedStateChangeListener { group, checkedIds ->
-            Log.d("요일",checkedIds.size.toString())
+            Log.d("test", checkedIds.toString())
+            if (checkedIds.contains(2131230741))
+                sel_dow[0]=1
+            else
+                sel_dow[0]=0
+            if (checkedIds.contains(2131230730))
+                sel_dow[1]=1
+            else
+                sel_dow[1]=0
+            if (checkedIds.contains(2131230745))
+                sel_dow[2]=1
+            else
+                sel_dow[2]=0
+            if (checkedIds.contains(2131230746))
+                sel_dow[3]=1
+            else
+                sel_dow[3]=0
+            if (checkedIds.contains(2131230744))
+                sel_dow[4]=1
+            else
+                sel_dow[4]=0
+            if (checkedIds.contains(2131230728))
+                sel_dow[5]=1
+            else
+                sel_dow[5]=0
+            if (checkedIds.contains(2131230738))
+                sel_dow[6]=1
+            else
+                sel_dow[6]=0
+
+            Log.d("요일",sel_dow.toString())
+
+
+
 
         }
 
@@ -145,6 +181,8 @@ class TimeSettingActivity : AppCompatActivity() {
             intent.putExtra("coffee_sw",coffee)
             intent.putExtra("alarm_sw",sound)
 
+            intent.putExtra("dow",sel_dow.toString())
+
 
             val timesetFragment=TimesetFragment()
             timesetFragment.arguments=bundle
@@ -155,9 +193,20 @@ class TimeSettingActivity : AppCompatActivity() {
             val Pos : String=(pos.toString())
             val Day : String = (sel_year.toString()+"."+sel_month.toString().padStart(n, '0')+"."+sel_date.toString().padStart(n, '0'))
             val Time: String = (sel_hour.toString().padStart(n, '0')+"."+sel_minute.toString().padStart(n, '0'))
+            val Dow:String = (sel_dow.toString())
+            if (sound==true)
+                sound_int=1
+            else
+                sound_int=0
+            val Alarm:String = (sound_int.toString())
+            if (coffee==true)
+                coffee_int=1
+            else
+                coffee_int=0
+            val Coffee:String = (coffee_int.toString())
             val task = InsertData()
             //task.execute("http://$IP_ADDRESS/input.php", Day, Time)
-            task.execute("http://$IP_ADDRESS/insertTest.php",Pos, Day, Time)
+            task.execute("http://$IP_ADDRESS/insertTest.php",Pos, Day, Time,Dow,Alarm,Coffee)
 
         }
     }
@@ -171,7 +220,14 @@ class TimeSettingActivity : AppCompatActivity() {
             val Pos : String? = params[1]
             val Day: String? = params[2]
             val Time: String? = params[3]
-            val postParameters: String = "Pos=$Pos&Day=$Day&Time=$Time"
+            val Dow:String?=params[4]
+            val Alarm:String?=params[5]
+            val Coffee:String?=params[6]
+            Log.d("coffeesw",Coffee.toString())
+            Log.d("dow",Dow.toString())
+
+            val postParameters: String = "Pos=$Pos&Day=$Day&Time=$Time&Dow=$Dow" +
+                    "&Alarm=$Alarm&Coffee=$Coffee"
             Log.d("pos",postParameters.toString())
             try {
                 val url = URL(serverURL)
